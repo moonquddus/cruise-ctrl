@@ -1,0 +1,6 @@
+# Record each answer in approvals.log.
+log = true
+# Record each screen that the plugin reads in trace.log.
+trace = false
+# Time to wait after a dialog appears before the answer.
+settle_ms = 400

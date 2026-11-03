@@ -139,5 +139,7 @@ check "forwards keystrokes" "hello" "$(field input)"
 STUB_FRAME= STUB_WAIT=4 DRIVER_SIZE="40 100" run
 check "follows a terminal resize" "40 100" "$(field size)"
 
+python3 -m unittest discover -s test -q || fail=$((fail + 1))
+
 printf '\n%s passed, %s failed\n' "$pass" "$fail"
 [ "$fail" -eq 0 ]

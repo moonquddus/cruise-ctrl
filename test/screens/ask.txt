@@ -1,0 +1,14 @@
+⏺ Write(f.txt)
+  ⎿  Wrote 1 line to f.txt
+      1 hi
+────────────────────────────────────────────────────────────────────────────────
+ ☐ Result
+Do you like the result?
+❯ 1. Yes
+     The result is good.
+  2. No
+     The result is not good.
+  3. Type something.
+────────────────────────────────────────────────────────────────────────────────
+  4. Chat about this
+Enter to select · ↑/↓ to navigate · Esc to cancel

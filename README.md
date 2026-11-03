@@ -42,6 +42,44 @@ claude-auto-clicker "fix the failing tests"
 claude-auto-clicker --dangerously-skip-permissions
 ```
 
+## Herdr plugin
+
+If you run Claude Code in herdr, use the plugin in place
+of the wrapper. The plugin monitors all Claude Code panes, so you start
+`claude` as usual. It needs Python 3.11 or later.
+
+```sh
+herdr plugin link ~/workspace/claude-auto
+```
+
+Herdr marks a pane as `blocked` when Claude Code shows a dialog. The plugin
+then reads the screen of that pane. If the screen shows a permission dialog
+with `❯ 1. Yes` selected, the plugin waits 400 ms and sends `1` and Enter. It
+then reads the screen again, because Claude Code shows queued dialogs one at a
+time.
+
+The plugin uses the same checks as the wrapper. It does not answer questions
+that Claude asks you, or `Run a dynamic workflow?`. If a dialog does not close
+after the answer, the plugin does not send a second answer.
+
+To stop the plugin, use `herdr plugin disable claude-auto-clicker`.
+
+### Settings
+
+Open the command palette and run `Auto Clicker: Settings`. This opens
+`settings.toml` in `$EDITOR`. The file is in the directory that
+`herdr plugin config-dir claude-auto-clicker` shows.
+
+| Setting     | Default | Effect                                            |
+| ----------- | ------- | ------------------------------------------------- |
+| `log`       | `true`  | Record each answer in `approvals.log`.            |
+| `trace`     | `false` | Record each screen that the plugin reads in `trace.log`. |
+| `settle_ms` | `400`   | Time to wait after a dialog appears.              |
+
+The plugin reads the file again for each dialog, so a change has an effect
+immediately. The logs are in `~/.local/state/herdr/plugins/claude-auto-clicker`.
+Run `Auto Clicker: Show Log` to see the answers live.
+
 ## How it works
 
 The script starts Claude Code on a pseudo-terminal and connects your keyboard

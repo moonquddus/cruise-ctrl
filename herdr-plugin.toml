@@ -1,0 +1,34 @@
+id = "claude-auto-clicker"
+name = "Claude Auto Clicker"
+version = "0.1.0"
+min_herdr_version = "0.9.5"
+description = "Answer Claude Code permission prompts with 1. Yes in all panes"
+platforms = ["macos", "linux"]
+
+[[events]]
+on = "pane.agent_status_changed"
+command = ["python3", "plugin/approve.py"]
+
+[[panes]]
+id = "settings"
+title = "Auto Clicker Settings"
+placement = "popup"
+command = ["plugin/settings.sh"]
+
+[[panes]]
+id = "log"
+title = "Auto Clicker Log"
+placement = "popup"
+command = ["plugin/log.sh"]
+
+[[actions]]
+id = "settings"
+title = "Auto Clicker: Settings"
+contexts = ["global"]
+command = ["sh", "-c", "exec \"$HERDR_BIN_PATH\" plugin pane open --plugin claude-auto-clicker --entrypoint settings --focus"]
+
+[[actions]]
+id = "log"
+title = "Auto Clicker: Show Log"
+contexts = ["workspace"]
+command = ["sh", "-c", "exec \"$HERDR_BIN_PATH\" plugin pane open --plugin claude-auto-clicker --entrypoint log --focus"]
