@@ -1,6 +1,6 @@
 #!/usr/bin/env expect
 
-# claude-auto.sh calls interact, which needs a terminal on stdin. This driver
+# cruise-ctrl.sh calls interact, which needs a terminal on stdin. This driver
 # supplies one, and can type at the wrapper the way a user would.
 
 set wrapper [lindex $argv 0]

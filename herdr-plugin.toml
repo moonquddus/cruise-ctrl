@@ -1,5 +1,5 @@
-id = "claude-auto-clicker"
-name = "Claude Auto Clicker"
+id = "cruise-ctrl"
+name = "Cruise Ctrl"
 version = "0.1.0"
 min_herdr_version = "0.9.5"
 description = "Answer Claude Code permission prompts with 1. Yes in all panes"
@@ -11,24 +11,24 @@ command = ["python3", "plugin/approve.py"]
 
 [[panes]]
 id = "settings"
-title = "Auto Clicker Settings"
+title = "Cruise Ctrl Settings"
 placement = "popup"
 command = ["plugin/settings.sh"]
 
 [[panes]]
 id = "log"
-title = "Auto Clicker Log"
+title = "Cruise Ctrl Log"
 placement = "popup"
 command = ["plugin/log.sh"]
 
 [[actions]]
 id = "settings"
-title = "Auto Clicker: Settings"
+title = "Cruise Ctrl: Settings"
 contexts = ["global"]
-command = ["sh", "-c", "exec \"$HERDR_BIN_PATH\" plugin pane open --plugin claude-auto-clicker --entrypoint settings --focus"]
+command = ["sh", "-c", "exec \"$HERDR_BIN_PATH\" plugin pane open --plugin cruise-ctrl --entrypoint settings --focus"]
 
 [[actions]]
 id = "log"
-title = "Auto Clicker: Show Log"
+title = "Cruise Ctrl: Show Log"
 contexts = ["workspace"]
-command = ["sh", "-c", "exec \"$HERDR_BIN_PATH\" plugin pane open --plugin claude-auto-clicker --entrypoint log --focus"]
+command = ["sh", "-c", "exec \"$HERDR_BIN_PATH\" plugin pane open --plugin cruise-ctrl --entrypoint log --focus"]

@@ -28,10 +28,10 @@ set ask {\u2610}
 # appears, so that a stray keypress cannot approve it. Wait past that window.
 set settle 400
 
-# CLAUDE_AUTO_TRACE records every byte Claude Code writes, to build a pattern
+# CRUISE_CTRL_TRACE records every byte Claude Code writes, to build a pattern
 # for a dialog that the wrapper does not answer.
-if {[info exists env(CLAUDE_AUTO_TRACE)]} {
-    log_file -a $env(CLAUDE_AUTO_TRACE)
+if {[info exists env(CRUISE_CTRL_TRACE)]} {
+    log_file -a $env(CRUISE_CTRL_TRACE)
 }
 
 spawn -noecho claude {*}$argv
@@ -90,8 +90,8 @@ proc send_yes {} {
     # becomes idle only after interact has read all of that output.
     set stale 1
     after idle { set stale 0 }
-    if {[info exists env(CLAUDE_AUTO_LOG)]} {
-        set log [open $env(CLAUDE_AUTO_LOG) a]
+    if {[info exists env(CRUISE_CTRL_LOG)]} {
+        set log [open $env(CRUISE_CTRL_LOG) a]
         puts $log "[clock format [clock seconds]] approved"
         close $log
     }

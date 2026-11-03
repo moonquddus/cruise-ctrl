@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Runs claude-auto.sh against a stub claude. No network, no credentials.
+# Runs cruise-ctrl.sh against a stub claude. No network, no credentials.
 set -u
 
 cd "$(dirname "$0")/.." || exit 1
@@ -18,7 +18,7 @@ fail=0
 
 run() {
     : > "$STUB_RECORD"
-    expect -f test/driver.exp ./claude-auto.sh "$@" > "$tmp/output" 2>&1
+    expect -f test/driver.exp ./cruise-ctrl.sh "$@" > "$tmp/output" 2>&1
     code=$?
 }
 
@@ -124,7 +124,7 @@ check "approves a dialog drawn after the input box" "1<LF>" "$(field input)"
 STUB_FRAME="$fixtures/skill-redrawn.txt" STUB_WAIT=4 run
 check "approves a recorded double-drawn dialog once" "1<LF>" "$(field input)"
 
-CLAUDE_AUTO_TRACE="$tmp/trace" STUB_FRAME="$fixtures/sandbox.txt" run
+CRUISE_CTRL_TRACE="$tmp/trace" STUB_FRAME="$fixtures/sandbox.txt" run
 check "records a trace" "yes" "$(grep -qc 'outside of sandbox' "$tmp/trace" 2>/dev/null && echo yes)"
 
 STUB_FRAME= run --resume "fix the failing tests"

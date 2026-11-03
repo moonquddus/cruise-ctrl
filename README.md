@@ -1,12 +1,12 @@
-# claude-auto-clicker
+# cruise-ctrl
 
-Auto-pilot for Claude Code. It starts Claude Code and answers the permission
+Cruise control for Claude Code. It starts Claude Code and answers the permission
 prompts with `1. Yes`.
 
 ## Why
 
 Claude Code has a bypass-permissions mode. That mode can still fall back to a
-permission prompt and stop work until you answer it. `claude-auto-clicker`
+permission prompt and stop work until you answer it. `cruise-ctrl`
 watches for those prompts and answers them, so a long task does not wait for
 you.
 
@@ -26,20 +26,20 @@ directory first, because `install` does not create it:
 
 ```sh
 mkdir -p ~/.local/bin
-install -m 755 claude-auto.sh ~/.local/bin/claude-auto-clicker
+install -m 755 cruise-ctrl.sh ~/.local/bin/cruise-ctrl
 ```
 
-If `claude-auto-clicker` is not found after this, add the directory to your `PATH`.
+If `cruise-ctrl` is not found after this, add the directory to your `PATH`.
 
 ## Use
 
-Use `claude-auto-clicker` in place of `claude`. It passes on every argument:
+Use `cruise-ctrl` in place of `claude`. It passes on every argument:
 
 ```sh
-claude-auto-clicker
-claude-auto-clicker --resume
-claude-auto-clicker "fix the failing tests"
-claude-auto-clicker --dangerously-skip-permissions
+cruise-ctrl
+cruise-ctrl --resume
+cruise-ctrl "fix the failing tests"
+cruise-ctrl --dangerously-skip-permissions
 ```
 
 ## Herdr plugin
@@ -49,7 +49,7 @@ of the wrapper. The plugin monitors all Claude Code panes, so you start
 `claude` as usual. It needs Python 3.11 or later.
 
 ```sh
-herdr plugin link ~/workspace/claude-auto
+herdr plugin link ~/workspace/cruise-ctrl
 ```
 
 Herdr marks a pane as `blocked` when Claude Code shows a dialog. The plugin
@@ -62,13 +62,13 @@ The plugin uses the same checks as the wrapper. It does not answer questions
 that Claude asks you, or `Run a dynamic workflow?`. If a dialog does not close
 after the answer, the plugin does not send a second answer.
 
-To stop the plugin, use `herdr plugin disable claude-auto-clicker`.
+To stop the plugin, use `herdr plugin disable cruise-ctrl`.
 
 ### Settings
 
-Open the command palette and run `Auto Clicker: Settings`. This opens
+Open the command palette and run `Cruise Ctrl: Settings`. This opens
 `settings.toml` in `$EDITOR`. The file is in the directory that
-`herdr plugin config-dir claude-auto-clicker` shows.
+`herdr plugin config-dir cruise-ctrl` shows.
 
 | Setting     | Default | Effect                                            |
 | ----------- | ------- | ------------------------------------------------- |
@@ -77,8 +77,8 @@ Open the command palette and run `Auto Clicker: Settings`. This opens
 | `settle_ms` | `400`   | Time to wait after a dialog appears.              |
 
 The plugin reads the file again for each dialog, so a change has an effect
-immediately. The logs are in `~/.local/state/herdr/plugins/claude-auto-clicker`.
-Run `Auto Clicker: Show Log` to see the answers live.
+immediately. The logs are in `~/.local/state/herdr/plugins/cruise-ctrl`.
+Run `Cruise Ctrl: Show Log` to see the answers live.
 
 ## How it works
 
@@ -139,19 +139,19 @@ again when you change the size of the window.
 
 ## Trace
 
-Set `CLAUDE_AUTO_TRACE` to a file to record every byte that Claude Code writes.
+Set `CRUISE_CTRL_TRACE` to a file to record every byte that Claude Code writes.
 Use this to build a pattern for a dialog that the wrapper does not answer.
 
 ```sh
-CLAUDE_AUTO_TRACE=/tmp/claude-auto-clicker.trace claude-auto-clicker
+CRUISE_CTRL_TRACE=/tmp/cruise-ctrl.trace cruise-ctrl
 ```
 
 ## Log
 
-Set `CLAUDE_AUTO_LOG` to record each automatic answer:
+Set `CRUISE_CTRL_LOG` to record each automatic answer:
 
 ```sh
-CLAUDE_AUTO_LOG=~/claude-auto-clicker.log claude-auto-clicker
+CRUISE_CTRL_LOG=~/cruise-ctrl.log cruise-ctrl
 ```
 
 The wrapper does not write to the screen, because that damages the Claude Code
@@ -163,13 +163,13 @@ A Mac that goes to sleep stops a long task. On macOS, use the built-in
 `caffeinate` command to prevent idle sleep while the wrapper runs:
 
 ```sh
-caffeinate -i claude-auto-clicker
+caffeinate -i cruise-ctrl
 ```
 
 To do this each time, add an alias to your `~/.zshrc`:
 
 ```sh
-alias claude-auto='caffeinate -i claude-auto-clicker'
+alias cruise='caffeinate -i cruise-ctrl'
 ```
 
 `caffeinate` stops when the wrapper exits. The `-i` flag lets the display
