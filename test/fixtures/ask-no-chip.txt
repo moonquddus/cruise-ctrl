@@ -1,0 +1,1 @@
+\r\n Write this to CX-24?\r\n\r\n \033[36m❯ 1. Yes, write it (Recommended)\033[0m\r\n   2. No\r\n   3. Type something.\r\n\r\n Enter to select · ↑/↓ to navigate · Esc to cancel\r\n

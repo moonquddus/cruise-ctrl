@@ -57,11 +57,18 @@ approves "approves a sandbox frame with a wrapped question" sandbox-wrapped.txt
 
 approves "approves a fetch prompt"          fetch.txt
 
+# Recorded from Claude Code 2.1.312: a dialog drawn over the last one, with only
+# the changed characters.
+approves "approves a dialog with a partly drawn question" partial-question.txt
+approves "approves a dialog with a partly drawn option" partial-option.txt
+
 ignores "ignores the question in prose"    prose.txt
 ignores "ignores an option list alone"     option-only.txt
 ignores "ignores a question from Claude"    ask.txt
 ignores "ignores a full-screen question from Claude" ask-fullscreen.txt
 ignores "ignores a question from Claude after prose" ask-after-prose.txt
+ignores "ignores a question from Claude without a chip" ask-no-chip.txt
+ignores "ignores a dynamic workflow dialog" workflow.txt
 
 # Claude Code shows queued dialogs one at a time. The next one is drawn as soon
 # as the last is answered, and can repeat its text exactly.
@@ -102,6 +109,16 @@ check "approves a dialog after a question from Claude" "1<LF>" "$(field input)"
 STUB_FRAME="$fixtures/fullscreen.txt" STUB_REDRAW="$fixtures/fullscreen-spaced.txt" \
     STUB_REDRAW_PIECES=6 STUB_WAIT=4 run
 check "approves a frame redrawn in pieces once" "1<LF>" "$(field input)"
+
+# Recorded from Claude Code 2.1.312: a queued dialog closed by itself during the
+# wait, and Claude Code drew the empty input box.
+STUB_FRAME="$fixtures/proceed.txt" STUB_REDRAW="$fixtures/input-box.txt" \
+    STUB_REDRAW_DELAY=0.2 STUB_WAIT=4 run
+check "sends nothing when the dialog closes during the wait" "" "$(field input)"
+
+STUB_FRAME="$fixtures/input-box.txt" STUB_REDRAW="$fixtures/proceed.txt" \
+    STUB_REDRAW_DELAY=0.2 STUB_WAIT=4 run
+check "approves a dialog drawn after the input box" "1<LF>" "$(field input)"
 
 # Recorded from Claude Code 2.1.286, text masked: a dialog drawn twice before an answer.
 STUB_FRAME="$fixtures/skill-redrawn.txt" STUB_WAIT=4 run

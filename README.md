@@ -59,6 +59,11 @@ Claude Code does not always write the spaces between the words. In full-screen
 mode it moves the cursor to the start of the next word instead. The wrapper
 accepts a space or an escape sequence at each of these positions.
 
+Claude Code also draws only the characters that change. When a dialog replaces
+the last one, its question can arrive with letters missing, for example
+`Do you wa t to proceed?`. The wrapper then finds the dialog by its selected
+first option, `❯ 1. Yes`. That line can also lose its dot.
+
 When it finds both, it waits 400 ms and then sends `1` and a carriage return.
 This is the same input as a manual selection of `1. Yes`.
 
@@ -66,10 +71,11 @@ The wait is necessary. Claude Code refuses input that arrives less than 150 ms
 after a dialog appears, so that a stray keypress cannot approve it. An
 immediate `1` is discarded, and the wrapper gets no second chance.
 
-Three checks keep the wrapper quiet:
+Five checks keep the wrapper quiet:
 
-- It answers only when the option list comes after the question. If Claude Code
-  writes `Do you want to proceed?` in ordinary text, the wrapper does nothing.
+- It answers only when the option list comes after the question, or when it
+  sees the selected option `❯ 1. Yes`. If Claude Code writes
+  `Do you want to proceed?` in ordinary text, the wrapper does nothing.
 - It answers a given prompt once. Claude Code can draw an open dialog again
   during the wait, with other escape sequences. The wrapper continues to read
   during the wait and ignores those redraws. After it sends `1`, the wrapper
@@ -80,6 +86,15 @@ Three checks keep the wrapper quiet:
 - It does not answer the questions that Claude asks you. Such a question has a
   header chip, for example `☐ Next step`, and its first option is often `Yes`.
   When the wrapper sees the chip, it ignores the question and its options.
+  Such a question also has the footer `Enter to select`. If the wrapper sees
+  that footer during the wait, it sends nothing.
+- It does not send `1` to a dialog that closed during the wait. A queued dialog
+  can close by itself, for example after an earlier `allow reading during this
+  session`. Claude Code then draws the empty input box, and the wrapper sends
+  nothing. Without this check, Claude would get `1` as a message.
+- It does not answer `Run a dynamic workflow?`. A workflow starts many agents,
+  so you answer it yourself. The wrapper ignores a first option of
+  `Yes, run it`.
 
 The script also copies the size of your terminal to Claude Code, and does it
 again when you change the size of the window.

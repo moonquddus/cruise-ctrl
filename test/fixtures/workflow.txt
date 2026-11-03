@@ -1,0 +1,1 @@
+\r\n Run a dynamic workflow?\r\n\r\n This dynamic workflow will spin up multiple subagents across the following phases:\r\n   1. Review\r\n   2. Verify\r\n\r\n Do you want to proceed?\r\n \033[38;2;177;185;249m❯\033[4G\033[38;2;153;153;153m1. \033[38;2;177;185;249mYes,\033[12Grun\033[16Git\r\n   2. View raw script\r\n   3. No\r\n\r\n Esc to cancel · Tab to amend\r\n
